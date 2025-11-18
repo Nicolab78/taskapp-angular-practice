@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Task } from '../models/Task'
+import { Task } from '../models/Task';
 
 @Injectable({
   providedIn: 'root',
@@ -16,16 +16,20 @@ export class TaskService {
   }
   
   create(task: Task) {
-    this.http.post<Task>(this.base, task).subscribe(newTask => this.tasks.update(arr => [...arr, newTask]));
+    this.http.post<Task>(this.base, task).subscribe(newTask =>
+      this.tasks.update(arr => [...arr, newTask])
+    );
   }
 
   update(id: number, task: Task) {
-    this.http.post<Task>('${this.base}/${id}', task).subscribe(updated => this.tasks.update(arr => arr.map(t => t.id === id ? updated : t)));
+    this.http.put<Task>(`${this.base}/${id}`, task).subscribe(updated =>
+      this.tasks.update(arr => arr.map(t => t.id === id ? updated : t))
+    );
   }
 
-  delete(id: number){
-    this.http.delete('${this.base}/${id}').subscribe(() => this.tasks.update(arr => arr.filter(t => t.id !== id)));
+  delete(id: number) {
+    this.http.delete(`${this.base}/${id}`).subscribe(() =>
+      this.tasks.update(arr => arr.filter(t => t.id !== id))
+    );
   }
-
-  
 }

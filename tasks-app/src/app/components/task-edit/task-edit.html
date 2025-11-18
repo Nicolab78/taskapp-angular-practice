@@ -1,1 +1,6 @@
-<p>task-edit works!</p>
+<div class="task-edit">
+    <input [(ngModel)]="editedTitle" placeholder="Titre" />
+    <textarea [(ngModel)]="editedNote" placeholder="Note"></textarea>
+    <button (click)="onSave()">Sauvegarder</button>
+    <button (click)="onCancel()">Annuler</button>
+</div>

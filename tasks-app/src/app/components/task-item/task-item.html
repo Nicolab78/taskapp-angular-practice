@@ -1,1 +1,17 @@
-<p>task-item works!</p>
+<div class="task-item">
+  @if (!editing) {
+  <span [class.done]="task.done">{{ task.title }}</span>
+  @if (task.note) {
+    <p class="note">{{ task.note }}</p>
+  }
+  <button (click)="onToggle()">{{ task.done ? 'Annuler' : 'Terminer' }}</button>
+  <button (click)="startEdit()">Modifier</button>
+  <button (click)="onRemove()">Supprimer</button>
+} @else {
+  <app-task-edit
+    [task]="task"
+    (save)="onSave($event)"
+    (cancel)="onCancel()">
+  </app-task-edit>
+}
+</div>

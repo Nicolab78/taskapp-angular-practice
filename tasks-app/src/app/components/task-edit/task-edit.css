@@ -1,0 +1,9 @@
+.task-edit {
+  display: flex;
+  gap: 8px;
+}
+
+input {
+  flex: 1;
+  padding: 4px;
+}

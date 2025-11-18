@@ -1,1 +1,17 @@
-<p>task-create works!</p>
+<form (ngSubmit)="onSubmit()">
+  <input
+    type="text"
+    [(ngModel)]="newTitle"
+    name="title"
+    placeholder="Nouvelle tâche..."
+    required
+  />
+
+  <textarea
+    [(ngModel)]="newNote"
+    name="note"
+    placeholder="Ajouter une note (optionnelle)..."
+  ></textarea>
+
+  <button type="submit">Ajouter</button>
+</form>

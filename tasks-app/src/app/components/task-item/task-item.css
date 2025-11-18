@@ -1,0 +1,10 @@
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-item span.done {
+  text-decoration: line-through;
+  color: gray;
+}
