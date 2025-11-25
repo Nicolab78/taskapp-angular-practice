@@ -20,6 +20,9 @@ export class TasksComponent {
     this.taskService.fetch();
   }
 
+  lastAddedId: number | null = null;
+  lastEditedId: number | null = null;
+
   onCreateTask(data: { title: string; note?: string }) {
     const newTask: Task = {
       id: Date.now(),
@@ -29,7 +32,20 @@ export class TasksComponent {
       created_at: new Date().toISOString()
     };
     this.taskService.create(newTask);
+
+    this.lastAddedId = newTask.id;
+
+    setTimeout(() => {
+      this.lastAddedId = null;
+    }, 1000);
   }
+
+  onEditTask(updatedTask: Task) {
+  this.taskService.update(updatedTask.id, updatedTask);
+
+  this.lastEditedId = updatedTask.id;
+  setTimeout(() => this.lastEditedId = null, 1000);
+}
 
 
 }

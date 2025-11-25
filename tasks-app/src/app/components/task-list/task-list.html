@@ -1,12 +1,16 @@
 <ul>
   @for (task of taskService.tasks(); track task.id) {
-    <li>
+    <li [class.highlight]="task.id === lastAddedId" [class.edited]="task.id === lastEditedId">
+
       <app-task-item 
         [task]="task"
         (remove)="taskService.delete($event)"
         (toggle)="taskService.update(task.id, { id: task.id, title: task.title, done: $event.done, note: task.note, created_at: task.created_at })"
-        (edit)="taskService.update(task.id, { id: task.id, title: $event.title, done: task.done, note: $event.note, created_at: task.created_at })">
+        (edit)="taskEdited.emit($event)"
+        >
       </app-task-item>
     </li>
   }
 </ul>
+
+<ng-content></ng-content>

@@ -6,3 +6,13 @@ ul {
 li {
   margin: 6px 0;
 }
+
+.highlight {
+  background-color: yellow;
+  transition: background-color 1s ease;
+}
+
+.edited {
+  background-color: lightgreen;
+  transition: background-color 1s ease;
+}

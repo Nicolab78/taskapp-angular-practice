@@ -1,6 +1,11 @@
 .task-edit {
-  display: flex;
-  gap: 8px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.task-edit.edited {
+  background-color: lightgreen;
+  transition: background-color 1s ease;
 }
 
 input {
