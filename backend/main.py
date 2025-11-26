@@ -18,6 +18,7 @@ class Task(BaseModel):
     done: bool = False
     note: str | None = None
     created_at: datetime = datetime.now()
+    category_id: int | None = None
 
 db: list[Task] = []
 
@@ -36,6 +37,10 @@ def get_task(task_id: int):
 def create_task(task: Task):
     if any(t.id == task.id for t in db):
         raise HTTPException(400, "ID already exists")
+    
+    if task.category_id is not None and not any(c.id == task.category_id for c in db_categories):
+        raise HTTPException(400, "Category does not exist")
+    
     db.append(task)
     return task
 
@@ -43,6 +48,9 @@ def create_task(task: Task):
 def update_task(task_id: int, updated: Task):
     for i, t in enumerate(db):
         if t.id == task_id:
+            if updated.category_id is not None and not any(c.id == updated.category_id for c in db_categories):
+                raise HTTPException(400, "Category does not exist")
+
             db[i] = updated
             return updated
     raise HTTPException(404, "Task not found")
@@ -54,3 +62,52 @@ def delete_task(task_id: int):
     db = [t for t in db if t.id != task_id]
     if len(db) == before:
         raise HTTPException(404, "Task not found")
+    
+
+class Category(BaseModel):
+    id: int
+    name: str
+    color: str | None = None
+    created_at: datetime = datetime.now()
+
+db_categories: list[Category] = []
+
+@app.get("/categories")
+def list_categories():
+    return db_categories
+
+@app.get("/categories/{category_id}")
+def get_category(category_id: int):
+    for cat in db_categories:
+        if cat.id == category_id:
+            return cat
+    raise HTTPException(404, "Category not found")
+
+@app.post("/categories", status_code=201)
+def create_category(category: Category):
+    if any(c.id == category.id for c in db_categories):
+        raise HTTPException(400, "ID already exists")
+    db_categories.append(category)
+    return category
+
+@app.put("/categories/{category_id}")
+def update_category(category_id: int, updated: Category):
+    for i, c in enumerate(db_categories):
+        if c.id == category_id:
+            db_categories[i] = updated
+            return updated
+    raise HTTPException(404, "Category not found")
+
+@app.delete("/categories/{category_id}", status_code=204)
+def delete_category(category_id: int):
+    global db_categories
+    before = len(db_categories)
+    db_categories = [c for c in db_categories if c.id != category_id]
+    if len(db_categories) == before:
+        raise HTTPException(404, "Category not found")
+
+@app.get("/categories/{category_id}/tasks")
+def get_tasks_by_category(category_id: int):
+    if not any(c.id == category_id for c in db_categories):
+        raise HTTPException(404, "Category not found")
+    return [t for t in db if t.category_id == category_id]

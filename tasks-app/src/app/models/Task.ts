@@ -4,5 +4,6 @@ export interface Task {
   done: boolean;
   note?: string;
   created_at?: string;
+  category_id?: number;
 }
 

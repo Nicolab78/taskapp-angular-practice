@@ -3,6 +3,7 @@ import { TaskService } from '../../services/task';
 import { TaskListComponent } from '../task-list/task-list';
 import { TaskCreateComponent } from '../task-create/task-create';
 import { Task } from '../../models/Task'; 
+import { CategoryService } from '../../services/category';
 
 @Component({
   selector: 'app-tasks',
@@ -13,23 +14,26 @@ import { Task } from '../../models/Task';
 })
 export class TasksComponent {
 
-  constructor( public taskService: TaskService) {}
+  constructor( public taskService: TaskService, public categoryService: CategoryService) {}
 
   ngOnInit() {
 
     this.taskService.fetch();
+    this.categoryService.fetch();
+
   }
 
   lastAddedId: number | null = null;
   lastEditedId: number | null = null;
 
-  onCreateTask(data: { title: string; note?: string }) {
+  onCreateTask(data: { title: string; note?: string; category_id?: number  }) {
     const newTask: Task = {
       id: Date.now(),
       title: data.title,
       done: false,
       note: data.note,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      category_id: data.category_id
     };
     this.taskService.create(newTask);
 

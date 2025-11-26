@@ -14,5 +14,12 @@
     placeholder="Ajouter une note (optionnelle)..."
   ></textarea>
 
+<select [(ngModel)]="selectedCategoryId" name="category">
+  <option [ngValue]="null">-- Choisir une catégorie --</option>
+  @for (cat of categoryService.categories(); track cat.id) {
+    <option [ngValue]="cat.id">{{ cat.name }}</option>
+  }
+</select>
+
   <button type="submit">Ajouter</button>
 </form>

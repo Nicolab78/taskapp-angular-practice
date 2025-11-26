@@ -1,0 +1,18 @@
+<div class="category-item">
+  @if (!editing) {
+    <span class="name">{{ category.name }}</span>
+    @if (category.color) {
+      <span class="badge" [style.backgroundColor]="category.color">
+        {{ category.color }}
+      </span>
+    }
+    <button (click)="startEdit()">Modifier</button>
+    <button (click)="onRemove()">Supprimer</button>
+  } @else {
+    <app-category-edit
+      [category]="category"
+      (save)="onSave($event)"
+      (cancel)="onCancel()">
+    </app-category-edit>
+  }
+</div>

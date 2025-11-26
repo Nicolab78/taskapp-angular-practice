@@ -1,0 +1,15 @@
+<ul>
+  @for (category of categoryService.categories(); track category.id) {
+    <li [class.highlight]="category.id === lastAddedId" 
+        [class.edited]="category.id === lastEditedId">
+
+      <app-category-item 
+        [category]="category"
+        (remove)="categoryService.delete($event)"
+        (edit)="categoryEdited.emit($event)">
+      </app-category-item>
+    </li>
+  }
+</ul>
+
+<ng-content></ng-content>

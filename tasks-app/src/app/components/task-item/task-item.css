@@ -4,7 +4,15 @@
   gap: 8px;
 }
 
-.task-item span.done {
+.task-item .done {
   text-decoration: line-through;
-  color: gray;
+  color: #888;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
 }

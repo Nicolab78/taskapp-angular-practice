@@ -1,0 +1,10 @@
+<div class="categories-container">
+  <app-category-create (create)="onCreateCategory($event)"></app-category-create>
+
+  <app-category-list 
+    [lastAddedId]="lastAddedId" 
+    [lastEditedId]="lastEditedId"
+    (categoryEdited)="onEditCategory($event)">
+    <p>Total de catégories : {{ categoryService.categories().length }}</p>
+  </app-category-list>
+</div>

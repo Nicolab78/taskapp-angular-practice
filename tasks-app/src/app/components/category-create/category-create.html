@@ -1,0 +1,19 @@
+<form (ngSubmit)="onSubmit()">
+  <input
+    #nameInput
+    type="text"
+    [(ngModel)]="newName"
+    name="name"
+    placeholder="Nouvelle catégorie..."
+    required
+  />
+
+  <input
+    type="text"
+    [(ngModel)]="newColor"
+    name="color"
+    placeholder="Couleur (optionnelle)..."
+  />
+
+  <button type="submit">Ajouter</button>
+</form>

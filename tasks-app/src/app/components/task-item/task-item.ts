@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../../models/Task';
 import { TaskEditComponent } from '../task-edit/task-edit';
+import { CategoryService } from '../../services/category';
 
 @Component({
   selector: 'app-task-item',
@@ -17,6 +18,8 @@ export class TaskItemComponent {
   @Output() edit = new EventEmitter<Task>();
 
   editing = false
+
+  constructor(public categoryService: CategoryService) {} 
 
   onRemove() {
     this.remove.emit(this.task.id);
@@ -38,5 +41,17 @@ export class TaskItemComponent {
   onCancel() {
     this.editing = false;
   }
+
+  get categoryName(): string {
+    const categories = this.categoryService.categories();
+    const cat = categories.find(c => c.id === this.task.category_id);
+    return cat ? cat.name : '';
+  }
+
+  get categoryColor(): string {
+  const cat = this.categoryService.categories().find(c => c.id === this.task.category_id);
+  return cat?.color ?? '#666';
+}
+
 
 }
