@@ -138,3 +138,30 @@ def delete_reminder(reminder_id: int):
     db_reminders = [r for r in db_reminders if r.id != reminder_id]
     if len(db_reminders) == before:
         raise HTTPException(404, "Reminder not found")
+    
+
+class Note(BaseModel):
+    id: int
+    text: str
+    created_at: datetime = datetime.now()
+
+db_notes: list[Note] = []
+
+@app.get("/notes")
+def list_notes():
+    return db_notes
+
+@app.post("/notes", status_code=201)
+def create_note(note: Note):
+    if any(n.id == note.id for n in db_notes):
+        raise HTTPException(400, "ID already exists")
+    db_notes.append(note)
+    return note
+
+@app.delete("/notes/{note_id}", status_code=204)
+def delete_note(note_id: int):
+    global db_notes
+    before = len(db_notes)
+    db_notes = [n for n in db_notes if n.id != note_id]
+    if len(db_notes) == before:
+        raise HTTPException(404, "Note not found")

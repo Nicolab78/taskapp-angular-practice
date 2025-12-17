@@ -4,10 +4,11 @@ import { CategoriesComponent } from '../categories/categories';
 import { ReminderCreateComponent } from '../reminder/reminder-create/reminder-create';
 import { ReminderService } from '../../services/reminder';
 import { Reminder } from '../../models/Reminder';
+import { NotesComponent } from '../note/note/note';
 
 @Component({
   selector: 'app-home',
-  imports: [TasksComponent, CategoriesComponent, ReminderCreateComponent],
+  imports: [TasksComponent, CategoriesComponent, ReminderCreateComponent, NotesComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

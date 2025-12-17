@@ -1,0 +1,22 @@
+<input
+  placeholder="Filtrer..."
+  (input)="filter.set($event.target.value)"
+>
+
+<div class="create">
+  <input
+    #noteInput
+    placeholder="Nouvelle note..."
+    (keyup.enter)="onCreate(noteInput)"
+  >
+  <button (click)="onCreate(noteInput)">Ajouter</button>
+</div>
+
+<ul>
+  @for (n of filteredNotes(); track n.id) {
+    <li>
+      <span>{{ n.text }}</span>
+      <button (click)="onDelete(n.id)">x</button>
+    </li>
+  }
+</ul>
