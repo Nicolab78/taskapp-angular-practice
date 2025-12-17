@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="reminder-form">
+
+  <div class="field">
+    <label>Date</label>
+    <input type="date" formControlName="date" />
+  </div>
+
+  <div class="field">
+    <label>Heure</label>
+    <input type="time" formControlName="time" />
+  </div>
+
+  <div class="field">
+    <label>Message</label>
+    <input type="text" formControlName="message" placeholder="Optionnel" />
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">
+    Ajouter
+  </button>
+
+</form>

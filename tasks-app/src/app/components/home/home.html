@@ -3,3 +3,21 @@
 
 <h2>Tâches</h2>
 <app-tasks></app-tasks>
+
+<h2>Créer un rappel</h2>
+<app-reminder-create (create)="onReminderCreate($event)"></app-reminder-create>
+
+<h2>Rappels</h2>
+
+<ul>
+  @for (r of reminders(); track r.id) {
+    <li>
+      <strong>{{ r.date }} {{ r.time }}</strong>
+      <span>— {{ r.message || 'Sans message' }}</span>
+
+      <button (click)="onReminderDelete(r.id)">
+        Supprimer
+      </button>
+    </li>
+  }
+</ul>

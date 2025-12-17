@@ -111,3 +111,30 @@ def get_tasks_by_category(category_id: int):
     if not any(c.id == category_id for c in db_categories):
         raise HTTPException(404, "Category not found")
     return [t for t in db if t.category_id == category_id]
+
+class Reminder(BaseModel):
+    id: int
+    date: str
+    time: str
+    message: str | None = None
+
+db_reminders: list[Reminder] = []
+
+@app.get("/reminders")
+def list_reminders():
+    return db_reminders
+
+@app.post("/reminders", status_code=201)
+def create_reminder(reminder: Reminder):
+    if any(r.id == reminder.id for r in db_reminders):
+        raise HTTPException(400, "ID already exists")
+    db_reminders.append(reminder)
+    return reminder
+
+@app.delete("/reminders/{reminder_id}", status_code=204)
+def delete_reminder(reminder_id: int):
+    global db_reminders
+    before = len(db_reminders)
+    db_reminders = [r for r in db_reminders if r.id != reminder_id]
+    if len(db_reminders) == before:
+        raise HTTPException(404, "Reminder not found")
